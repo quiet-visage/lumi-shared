@@ -9,13 +9,8 @@ import {
 } from "@heroui/modal";
 import { Select, SelectItem } from "@heroui/select";
 import { addToast } from "@heroui/toast";
-import axios from "axios";
 import { useContext, useState } from "react";
-import { FileTag } from "./fileTag";
 import { Button } from "@heroui/button";
-import { FileUploadProgressPopUp } from "./fileUploadProgress";
-import { AnexFileModal } from "./anexFileModal";
-import { PaperClipIcon } from "./icons";
 import { api } from "@/config/api";
 import { LabelContext } from "@/app/providers";
 import { Annex } from "./annex";
