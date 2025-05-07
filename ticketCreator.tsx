@@ -14,10 +14,12 @@ import { Button } from "@heroui/button";
 import { api } from "@/config/api";
 import { LabelContext } from "@/app/providers";
 import { Annex } from "./annex";
+import { headers } from "next/headers";
 
 export interface TicketCreationProps {
   isOpen: boolean;
   user: TicketUser;
+  token: string;
   onUpload: () => void;
   onCancel: () => void;
 }
@@ -25,6 +27,7 @@ export interface TicketCreationProps {
 export const TicketCreation = ({
   isOpen,
   user,
+  token,
   onCancel,
   onUpload,
 }: TicketCreationProps) => {
@@ -49,7 +52,9 @@ export const TicketCreation = ({
     };
 
     api
-      .post("/add_ticket", JSON.stringify(ticket))
+      .post("/add_ticket", JSON.stringify(ticket), {
+        headers: { Authorization: token },
+      })
       .then((response) => {
         console.log(response);
         addToast({ title: "chamado criado", color: "success" });
