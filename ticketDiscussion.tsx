@@ -28,16 +28,16 @@ interface TicketDiscussionProps {
   ticket: Ticket;
   isOpen: boolean;
   user: TicketUser;
+  token: string;
   onOpenChange: (open: boolean) => void;
-  onCommentsChange: () => void;
 }
 
 export const TicketDiscussion = ({
   ticket,
   isOpen,
   user,
+  token,
   onOpenChange,
-  onCommentsChange,
 }: TicketDiscussionProps) => {
   const [commentText, setCommentText] = useState<string>("");
   const [annexes, setAnnexes] = useState<File[]>([]);
@@ -61,10 +61,14 @@ export const TicketDiscussion = ({
     };
 
     await api
-      .post("/add_comment", {
-        comment: comment,
-        ticketID: ticket._id,
-      })
+      .post(
+        "/add_comment",
+        {
+          comment: comment,
+          ticketID: ticket._id,
+        },
+        { headers: { Authorization: token } }
+      )
       .then((r) => {
         addToast({ title: "Comentário enviado", color: "success" });
       })

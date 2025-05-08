@@ -65,10 +65,7 @@ export const TicketCardUser = ({
   fileCount: number;
 }) => (
   <div className="flex flex-col items-center justify-center w-1/4">
-    <User
-      name={user.name}
-      description={`${user.branch} - ${user.occupation}`}
-    />
+    <User name={user.name} description={`${user.branch} - ${user.sector}`} />
     <p className="text-tiny text-default-400">
       {dayjs(createdAt).format("DD-MM-YY HH:mm")}
     </p>
