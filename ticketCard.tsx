@@ -81,8 +81,8 @@ export const TicketCard = ({
   const L = useContext(LabelContext);
 
   return (
-    <div className="inline-block w-full max-w-2xl text-center justify-center">
-      <Card className="flex w-full max-w-2xl" isPressable onPress={onClick}>
+    <div className="inline-block max-w-5xl text-center justify-around">
+      <Card className="flex max-w-5xl" isPressable onPress={onClick}>
         <CardBody className="flex flex-row gap-6 items-center">
           <TicketCardUser
             user={ticket.createdBy}
