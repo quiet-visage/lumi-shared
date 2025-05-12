@@ -9,6 +9,7 @@ import { api } from "@/config/api";
 import { addToast } from "@heroui/toast";
 
 interface AnnexProps {
+  token: string;
   user: TicketUser;
   annexes: File[];
   setAnnexes: (v: File[]) => void;
@@ -43,6 +44,7 @@ export const AnnexedFileList = ({
 );
 
 export const Annex = ({
+  token,
   user,
   annexes,
   setAnnexes,
@@ -77,7 +79,7 @@ export const Annex = ({
       formData.append("body", JSON.stringify(jsonData));
 
       await api
-        .post("/upload_file", formData)
+        .post("/upload_file", formData, { headers: { Authorization: token } })
         .then((response) => {
           if (response.status == 200 || response.status == 201) {
             let newFilesToBeUploaded = [...filesToBeUploaded];

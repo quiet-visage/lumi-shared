@@ -1,5 +1,7 @@
 import { FileLink } from "./fileLink";
 
 export const TicketFileLink = ({ filename }: { filename: string }) => {
-  return <FileLink url={`http://192.168.0.207:8000/api/file/${filename}`} />;
+  return (
+    <FileLink url={`http://${process.env.API_HOST}:8000/file/${filename}`} />
+  );
 };

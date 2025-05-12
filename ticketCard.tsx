@@ -8,15 +8,12 @@ import { useContext } from "react";
 import {
   Calendar,
   CircleAlert,
-  CircleCheck,
   CircleCheckBig,
   CircleDot,
   CircleEllipsis,
   Flag,
-  Info,
   Leaf,
   Link2,
-  Lock,
   MessageSquareText,
 } from "lucide-react";
 import { Avatar } from "@heroui/avatar";

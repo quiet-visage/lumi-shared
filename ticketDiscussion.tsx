@@ -131,6 +131,7 @@ export const TicketDiscussion = ({
                 onValueChange={(t) => setCommentText(t)}
               ></Textarea>
               <Annex
+                token={token}
                 user={user}
                 annexes={annexes}
                 setAnnexes={setAnnexes}
