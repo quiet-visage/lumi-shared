@@ -1,18 +1,25 @@
 import { Ticket, TicketPriority, TicketStatus, TicketUser } from "@/app/models";
 import { LabelContext } from "@/app/providers";
-import { Card, CardBody } from "@heroui/card";
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import { Chip } from "@heroui/chip";
 import { User } from "@heroui/user";
 import dayjs from "dayjs";
 import { useContext } from "react";
 import {
+  Calendar,
   CircleAlert,
   CircleCheck,
+  CircleCheckBig,
+  CircleDot,
+  CircleEllipsis,
   Flag,
   Info,
+  Leaf,
+  Link2,
   Lock,
   MessageSquareText,
 } from "lucide-react";
+import { Avatar } from "@heroui/avatar";
 
 export interface TicketCardProps {
   ticket: Ticket;
@@ -29,8 +36,13 @@ export const CommentsBubble = ({ commentCount }: { commentCount: number }) => (
 
 export const StatusChip = ({ status }: { status: TicketStatus }) => {
   const L = useContext(LabelContext);
-  const statusIcon = [<Info />, <Lock />, <></>];
-  const statusColor = ["primary", "secondary", "default"] as const;
+  const statusIcon = [
+    <CircleDot size={16} />,
+    <CircleEllipsis size={16} />,
+    <CircleCheckBig size={16} />,
+    <></>,
+  ];
+  const statusColor = ["success", "primary", "secondary", "default"] as const;
   return (
     <Chip color={statusColor[status]} startContent={statusIcon[status]}>
       {L.ticket.status[status]}
@@ -40,11 +52,11 @@ export const StatusChip = ({ status }: { status: TicketStatus }) => {
 
 export const PriorityChip = ({ priority }: { priority: TicketPriority }) => {
   const L = useContext(LabelContext);
-  const priorityColor = ["success", "warning", "danger", "default"] as const;
+  const priorityColor = ["default", "warning", "danger", "default"] as const;
   const priorityIcon = [
-    <CircleCheck />,
-    <CircleAlert />,
-    <Flag />,
+    <Leaf size={16} />,
+    <CircleAlert size={16} />,
+    <Flag size={16} />,
     <></>,
   ] as const;
 
@@ -78,39 +90,59 @@ export const TicketCard = ({
   onClick,
   truncate = false,
 }: TicketCardProps) => {
-  const L = useContext(LabelContext);
-
   return (
-    <div className="inline-block w-full max-w-2xl text-center justify-center">
-      <Card className="flex w-full max-w-2xl" isPressable onPress={onClick}>
-        <CardBody className="flex flex-row gap-6 items-center">
-          <TicketCardUser
-            user={ticket.createdBy}
-            createdAt={ticket.createdAt}
-            fileCount={ticket.files.length}
-          />
-          <div
-            className={
-              "flex flex-col justify-center min-w-0 w-full max-w-xs w-max-md" +
-              (truncate ? " truncate" : "")
-            }
-          >
-            <p className={"text-md" + (truncate ? " truncate" : "")}>
-              {ticket.title}
-            </p>
-            <p
-              className={
-                "text-default-500 min-w-0" + (truncate ? " truncate" : "")
-              }
-            >
-              {ticket.description}
-            </p>
+    <Card className="w-5/6" isPressable onPress={onClick}>
+      <CardHeader>
+        <div className="flex w-full gap-5 justify-between items-center">
+          <Avatar isBordered />
+          <div className="flex flex-col gap-1 item-start justify-center">
+            <h4 className="text-small font-semibold text-default-600">
+              {ticket.createdBy.name}
+            </h4>
+            <h5 className="text-small tracking-tight text-default-400">
+              {ticket.createdBy.branch} - {ticket.createdBy.sector}
+            </h5>
           </div>
-          <CommentsBubble commentCount={ticket.comments.length} />
-          <PriorityChip priority={ticket.priority} />
-          <StatusChip status={ticket.status} />
-        </CardBody>
-      </Card>
-    </div>
+          <div className="w-full flex justify-center">
+            <h3 className="font-semibold text-default-600">
+              {ticket ? ticket.title : ""}
+            </h3>
+          </div>
+          <div className="flex gap-5 items-center">
+            <StatusChip status={ticket ? ticket.status : TicketStatus.OPEN} />
+            <PriorityChip
+              priority={ticket ? ticket.priority : TicketPriority.HIGH}
+            />
+          </div>
+        </div>
+      </CardHeader>
+      <CardBody className="flex w-2/3 self-center">
+        <p className="text-small text-default-600">
+          {ticket ? ticket.description : ""}
+        </p>
+      </CardBody>
+      <CardFooter className="flex w-full justify-end gap-5">
+        {ticket ? (
+          <>
+            <div className="flex gap-1 text-default-400 items-center">
+              <MessageSquareText size={14} />
+              <p className="text-xs">{ticket.comments.length}</p>
+            </div>
+            <div className="flex gap-1 text-default-400 items-center">
+              <Link2 size={14} />
+              <p className="text-tiny text-default-400">{`${ticket.files.length} anexo${ticket.files.length == 1 ? "" : "s"}`}</p>
+            </div>
+            <div className="flex gap-1 text-default-400 items-center">
+              <Calendar size={14} />
+              <p className="text-tiny text-default-400">
+                {dayjs(ticket.createdAt).format("YYYY-MM-DD HH:mm")}
+              </p>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+      </CardFooter>
+    </Card>
   );
 };
