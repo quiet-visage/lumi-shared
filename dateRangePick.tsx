@@ -7,9 +7,13 @@ import { today, getLocalTimeZone, DateValue } from "@internationalized/date";
 export const DateRangePick = ({
   minDate,
   maxDate,
+  setMinDate,
+  setMaxDate,
 }: {
   minDate: DateValue;
   maxDate: DateValue;
+  setMinDate: (v: DateValue) => void;
+  setMaxDate: (v: DateValue) => void;
 }) => {
   return (
     <Popover placement="bottom" triggerType="listbox">
@@ -22,27 +26,27 @@ export const DateRangePick = ({
         </PopoverSelectTrigger>
       </PopoverTrigger>
       <PopoverContent className="flex flex-row w-fit">
-        <div className="flex flex-col w-fit items-center p-2">
+        <div className="flex flex-col w-fit items-center p-2 gap-2">
           <p>
             De {minDate.year}-{minDate.month}-{minDate.day}
           </p>
           <Calendar
             showMonthAndYearPickers
             value={minDate}
-            onFocusChange={(v) => console.log(v)}
+            onFocusChange={(v) => setMinDate(v)}
             maxValue={maxDate}
           />
         </div>
-        <div className="flex flex-col w-fit items-center p-2">
+        <div className="flex flex-col w-fit items-center p-2 gap-2">
           <p>
             Até {maxDate.year}-{maxDate.month}-{maxDate.day}
           </p>
           <Calendar
             showMonthAndYearPickers
             value={maxDate}
-            onFocusChange={(v) => console.log(v)}
+            onFocusChange={(v) => setMaxDate(v)}
             minValue={minDate}
-            maxValue={maxDate}
+            maxValue={today(getLocalTimeZone())}
           />
         </div>
       </PopoverContent>
