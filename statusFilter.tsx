@@ -18,7 +18,10 @@ export const StatusFilter = ({
   return (
     <Popover placement="bottom" triggerType="listbox">
       <PopoverTrigger>
-        <PopoverSelectTrigger startContent={<CircleHelp size={16} />}>
+        <PopoverSelectTrigger
+          //@ts-expect-error
+          startContent={<CircleHelp size={16} />}
+        >
           Status
         </PopoverSelectTrigger>
       </PopoverTrigger>
