@@ -10,7 +10,7 @@ export const Navbar = () => {
   const token = useContext(UserTokenContext);
   const decodedToken = decodeToken(token);
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky">
+    <HeroUINavbar maxWidth="xl" position="sticky" shouldHideOnScroll>
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <User
           name={
