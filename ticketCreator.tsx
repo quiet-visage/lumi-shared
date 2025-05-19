@@ -56,7 +56,6 @@ export const TicketCreation = ({
         headers: { Authorization: token },
       })
       .then((response) => {
-        console.log(response);
         addToast({ title: "chamado criado", color: "success" });
       })
       .catch((err) => {
@@ -104,6 +103,7 @@ export const TicketCreation = ({
               label="Comentário"
             />
             <Annex
+              token={token}
               user={user}
               annexes={annexes}
               setAnnexes={setAnnexes}

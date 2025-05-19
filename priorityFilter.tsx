@@ -13,7 +13,10 @@ export const PriorityFilter = ({
   return (
     <Popover placement="bottom" triggerType="listbox">
       <PopoverTrigger>
-        <PopoverSelectTrigger startContent={<CircleAlert size={16} />}>
+        <PopoverSelectTrigger
+          //@ts-expect-error
+          startContent={<CircleAlert size={16} />}
+        >
           Prioridade
         </PopoverSelectTrigger>
       </PopoverTrigger>
