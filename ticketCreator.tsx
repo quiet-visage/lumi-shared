@@ -49,6 +49,12 @@ export const TicketCreation = ({
       createdAt: new Date(),
       comments: [],
       files: annexes.map((v) => v.name),
+      assignee: {
+        _id: "0",
+        name: "",
+        sector: "",
+        branch: "",
+      },
     };
 
     api
