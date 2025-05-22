@@ -5,11 +5,13 @@ import { AnimatedChevron } from "./animatedChevron";
 export const PopoverSelectTrigger = ({
   className = "",
   hideChevron = false,
+  loading = false,
   children,
   ...props
 }: {
   className?: string;
   hideChevron?: boolean;
+  loading?: boolean;
   children: ReactNode;
 }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -21,6 +23,7 @@ export const PopoverSelectTrigger = ({
   return (
     <Button
       {...props}
+      isLoading={loading}
       onPress={() => setOpen(!open)}
       endContent={endContent}
       variant="flat"
