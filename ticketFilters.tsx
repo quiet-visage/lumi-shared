@@ -39,6 +39,7 @@ export const TicketFiltersSelect = ({
         onValueChange={setSearch}
         startContent={<Search size={16} />}
         placeholder="procurar"
+        size="sm"
       />
       <DateRangePick
         minDate={minDate}

@@ -26,6 +26,7 @@ export const PopoverSelectTrigger = ({
       isLoading={loading}
       onPress={() => setOpen(!open)}
       endContent={endContent}
+      size="sm"
       variant="flat"
       className={
         "inline-flex flex-row items-center w-full bg-default-100 justify-start " +
