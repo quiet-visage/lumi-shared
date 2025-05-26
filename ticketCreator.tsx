@@ -50,7 +50,7 @@ export const TicketCreation = ({
       comments: [],
       files: annexes.map((v) => v.name),
       assignee: {
-        _id: "0",
+        _id: "0".repeat(24),
         name: "",
         sector: "",
         branch: "",

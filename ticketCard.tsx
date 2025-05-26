@@ -88,7 +88,12 @@ export const TicketCard = ({
   truncate = false,
 }: TicketCardProps) => {
   return (
-    <Card className="w-full min-h-fit" isPressable onPress={onClick}>
+    <Card
+      className="w-full min-h-fit"
+      isPressable
+      onPress={onClick}
+      shadow="sm"
+    >
       <CardHeader>
         <div className="flex w-full gap-5 justify-between items-center">
           <Avatar isBordered />
