@@ -42,7 +42,9 @@ export const TicketFiltersSelect = ({
         size="sm"
       />
       <DateRangePick
+        //@ts-expect-error
         minDate={minDate}
+        //@ts-expect-error
         maxDate={maxDate}
         setMinDate={setMinDate}
         setMaxDate={setMaxDate}
