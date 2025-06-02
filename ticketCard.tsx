@@ -42,7 +42,7 @@ export const StatusChip = ({ status }: { status: TicketStatus }) => {
   const statusColor = ["success", "primary", "secondary", "default"] as const;
   return (
     <Chip
-      variant="bordered"
+      variant="shadow"
       color={statusColor[status]}
       startContent={statusIcon[status]}
     >
@@ -63,7 +63,7 @@ export const PriorityChip = ({ priority }: { priority: TicketPriority }) => {
 
   return (
     <Chip
-      variant="bordered"
+      variant="shadow"
       color={priorityColor[priority]}
       startContent={priorityIcon[priority]}
     >
