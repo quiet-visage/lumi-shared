@@ -2,12 +2,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import { CalendarRange } from "lucide-react";
 import { PopoverSelectTrigger } from "./popOverSelectTrigger";
 import { Calendar } from "@heroui/calendar";
-import {
-  today,
-  getLocalTimeZone,
-  DateValue,
-  CalendarDate,
-} from "@internationalized/date";
+import { today, getLocalTimeZone } from "@internationalized/date";
 
 export const DateRangePick = ({
   minDate,
@@ -15,10 +10,10 @@ export const DateRangePick = ({
   setMinDate,
   setMaxDate,
 }: {
-  minDate: CalendarDate;
-  maxDate: CalendarDate;
-  setMinDate: (v: CalendarDate) => void;
-  setMaxDate: (v: CalendarDate) => void;
+  minDate: any;
+  maxDate: any;
+  setMinDate: (v: any) => void;
+  setMaxDate: (v: any) => void;
 }) => {
   return (
     <Popover placement="bottom" triggerType="listbox">
@@ -33,12 +28,11 @@ export const DateRangePick = ({
       <PopoverContent className="flex flex-row w-fit">
         <div className="flex flex-col w-fit items-center p-2 gap-2">
           <p>
-            De {minDate.year}-{minDate.month}-{minDate.day}
+            De {minDate?.year}-{minDate?.month}-{minDate?.day}
           </p>
           <Calendar
             showMonthAndYearPickers
-            // @ts-expect-error
-            value={minDate.calendar}
+            value={minDate}
             onFocusChange={(v) => setMinDate(v)}
             maxValue={maxDate}
           />
@@ -49,7 +43,6 @@ export const DateRangePick = ({
           </p>
           <Calendar
             showMonthAndYearPickers
-            // @ts-expect-error
             value={maxDate}
             onFocusChange={(v) => setMaxDate(v)}
             minValue={minDate}

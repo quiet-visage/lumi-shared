@@ -1,9 +1,9 @@
 import { Input } from "@heroui/input";
-import { DateValue } from "@internationalized/date";
 import { Search } from "lucide-react";
 import { DateRangePick } from "./dateRangePick";
 import { PriorityFilter } from "./priorityFilter";
 import { StatusFilter } from "./statusFilter";
+import { DateValue } from "@heroui/calendar";
 
 interface TicketFiltersSelectProps {
   minDate: DateValue;
@@ -40,11 +40,10 @@ export const TicketFiltersSelect = ({
         startContent={<Search size={16} />}
         placeholder="procurar"
         size="sm"
+        variant="bordered"
       />
       <DateRangePick
-        //@ts-expect-error
         minDate={minDate}
-        //@ts-expect-error
         maxDate={maxDate}
         setMinDate={setMinDate}
         setMaxDate={setMaxDate}

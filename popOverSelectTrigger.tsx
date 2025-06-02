@@ -27,10 +27,9 @@ export const PopoverSelectTrigger = ({
       onPress={() => setOpen(!open)}
       endContent={endContent}
       size="sm"
-      variant="flat"
+      variant="bordered"
       className={
-        "inline-flex flex-row items-center w-full bg-default-100 justify-start " +
-        className
+        "inline-flex flex-row items-center w-full justify-start " + className
       }
     >
       {children}
