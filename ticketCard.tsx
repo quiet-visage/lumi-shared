@@ -11,6 +11,7 @@ import {
   CircleCheckBig,
   CircleDot,
   CircleEllipsis,
+  CircleSmall,
   Flag,
   Leaf,
   Link2,
@@ -25,8 +26,8 @@ export interface TicketCardProps {
 }
 
 export const CommentsBubble = ({ commentCount }: { commentCount: number }) => (
-  <div className="flex text-default-400">
-    <MessageSquareText />
+  <div className="flex space-x-2 text-default-400">
+    <MessageSquareText size={16} />
     <p className="text-xs">{commentCount}</p>
   </div>
 );
@@ -45,6 +46,7 @@ export const StatusChip = ({ status }: { status: TicketStatus }) => {
       variant="shadow"
       color={statusColor[status]}
       startContent={statusIcon[status]}
+      size="sm"
     >
       {L.ticket.status[status]}
     </Chip>
@@ -53,7 +55,7 @@ export const StatusChip = ({ status }: { status: TicketStatus }) => {
 
 export const PriorityChip = ({ priority }: { priority: TicketPriority }) => {
   const L = useContext(LabelContext);
-  const priorityColor = ["default", "warning", "danger", "default"] as const;
+  const priorityColor = ["default", "default", "danger", "default"] as const;
   const priorityIcon = [
     <Leaf size={16} />,
     <CircleAlert size={16} />,
@@ -63,6 +65,7 @@ export const PriorityChip = ({ priority }: { priority: TicketPriority }) => {
 
   return (
     <Chip
+      size="sm"
       variant="shadow"
       color={priorityColor[priority]}
       startContent={priorityIcon[priority]}
@@ -119,6 +122,11 @@ export const TicketCard = ({
             </h3>
           </div>
           <div className="flex gap-5 items-center">
+            {Boolean(ticket.category.name) ? (
+              <CategoryChip ticket={ticket} />
+            ) : (
+              <></>
+            )}
             <StatusChip status={ticket ? ticket.status : TicketStatus.OPEN} />
             <PriorityChip
               priority={ticket ? ticket.priority : TicketPriority.HIGH}
@@ -154,5 +162,17 @@ export const TicketCard = ({
         )}
       </CardFooter>
     </Card>
+  );
+};
+
+export const CategoryChip = ({ ticket }: { ticket: Ticket }) => {
+  return (
+    <Chip
+      size="sm"
+      variant="shadow"
+      startContent={<CircleSmall color={ticket.category.color} />}
+    >
+      {ticket.category.name}
+    </Chip>
   );
 };
