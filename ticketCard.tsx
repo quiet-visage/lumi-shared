@@ -1,4 +1,10 @@
-import { Ticket, TicketPriority, TicketStatus, TicketUser } from "@/app/models";
+import {
+  Ticket,
+  TicketCategory,
+  TicketPriority,
+  TicketStatus,
+  TicketUser,
+} from "@/app/models";
 import { LabelContext } from "@/app/providers";
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import { Chip } from "@heroui/chip";
@@ -18,6 +24,7 @@ import {
   MessageSquareText,
 } from "lucide-react";
 import { Avatar } from "@heroui/avatar";
+import { TagChip } from "./tagChip";
 
 export interface TicketCardProps {
   ticket: Ticket;
@@ -117,13 +124,16 @@ export const TicketCard = ({
             </h5>
           </div>
           <div className="w-full flex justify-center">
-            <h3 className="font-semibold text-default-600">
-              {ticket ? ticket.title : ""}
-            </h3>
+            <div className="flex items-center gap-2">
+              <h3 className="font-semibold text-default-600">
+                {ticket ? ticket.title : ""}
+              </h3>
+              {ticket.tags?.map((v) => <TagChip tag={v} key={v._id} />)}
+            </div>
           </div>
           <div className="flex gap-5 items-center">
-            {Boolean(ticket.category.name) ? (
-              <CategoryChip ticket={ticket} />
+            {ticket.category ? (
+              <CategoryChip category={ticket.category} />
             ) : (
               <></>
             )}
@@ -165,14 +175,15 @@ export const TicketCard = ({
   );
 };
 
-export const CategoryChip = ({ ticket }: { ticket: Ticket }) => {
+export const CategoryChip = ({ category }: { category: TicketCategory }) => {
+  if (category == null || category.name.length < 1) return <></>;
   return (
     <Chip
       size="sm"
       variant="shadow"
-      startContent={<CircleSmall color={ticket.category.color} />}
+      startContent={<CircleSmall color={category.color} />}
     >
-      {ticket.category.name}
+      {category.name}
     </Chip>
   );
 };

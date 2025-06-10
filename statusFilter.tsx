@@ -63,7 +63,7 @@ export const StatusFilter = ({
               }
               key={"2"}
             >
-              Fechado
+              Encerrado
             </ListboxItem>
           </ListboxSection>
         </Listbox>{" "}
