@@ -1,4 +1,4 @@
-import { Ticket, TicketComment, TicketUser } from "@/app/models";
+import { CommentType, Ticket, TicketComment, TicketUser } from "@/app/models";
 import {
   Drawer,
   DrawerBody,
@@ -58,6 +58,7 @@ export const TicketDiscussion = ({
       createdBy: user,
       createdAt: new Date(),
       files: annexes.map((f) => f.name),
+      type: CommentType.Standard,
     };
 
     await api
@@ -110,6 +111,7 @@ export const TicketDiscussion = ({
                   content: ticket.description,
                   createdAt: ticket.createdAt,
                   createdBy: ticket.createdBy,
+                  type: CommentType.Standard,
                   files: ticket.files,
                 }}
               />
