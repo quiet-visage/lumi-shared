@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 import { FileLink } from "./fileLink";
 import { CircleSmall, UserCog } from "lucide-react";
 import { TagChip } from "./tagChip";
-import { CategoryChip } from "./ticketCard";
+import { CategoryChip, PriorityChip, StatusChip } from "./ticketCard";
 
 export const TicketCommentView = ({ comment }: { comment: TicketComment }) => {
   switch (comment.type) {
@@ -28,9 +28,35 @@ export const TicketCommentView = ({ comment }: { comment: TicketComment }) => {
       return <TagRemoveCommentView comment={comment} />;
     case CommentType.CategoryChange:
       return <CategoryChangeComment comment={comment} />;
+    case CommentType.StatusChange:
+      return <StatusChangeComment comment={comment} />;
+    case CommentType.PriorityChange:
+      return <PriorityChangeComment comment={comment} />;
     default:
       return <p>Comment type {comment.type} not implemented.</p>;
   }
+};
+
+const StatusChangeComment = ({ comment }: { comment: TicketComment }) => {
+  const status: number = Number(JSON.parse(comment.content));
+  return (
+    <div className="flex gap-2 items-center">
+      <CircleSmall />
+      <span>{comment.createdBy.name} Mudou a priridade para: </span>
+      <StatusChip status={status} />
+    </div>
+  );
+};
+
+const PriorityChangeComment = ({ comment }: { comment: TicketComment }) => {
+  const priority: number = Number(JSON.parse(comment.content));
+  return (
+    <div className="flex gap-2 items-center">
+      <CircleSmall />
+      <span>{comment.createdBy.name} Mudou a priridade para: </span>
+      <PriorityChip priority={priority} />
+    </div>
+  );
 };
 
 const CategoryChangeComment = ({ comment }: { comment: TicketComment }) => {
