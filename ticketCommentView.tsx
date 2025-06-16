@@ -10,9 +10,19 @@ import { Card, CardBody } from "@heroui/card";
 import { User } from "@heroui/user";
 import dayjs from "dayjs";
 import { FileLink } from "./fileLink";
-import { CircleSmall, UserCog } from "lucide-react";
+import {
+  ArrowUpDown,
+  CircleSmall,
+  MinusIcon,
+  PlusIcon,
+  Tag,
+  UserCog,
+  UserRound,
+} from "lucide-react";
 import { TagChip } from "./tagChip";
 import { CategoryChip, PriorityChip, StatusChip } from "./ticketCard";
+import { Chip } from "@heroui/chip";
+import { Badge } from "@heroui/badge";
 
 export const TicketCommentView = ({ comment }: { comment: TicketComment }) => {
   switch (comment.type) {
@@ -41,8 +51,9 @@ const StatusChangeComment = ({ comment }: { comment: TicketComment }) => {
   const status: number = Number(JSON.parse(comment.content));
   return (
     <div className="flex gap-2 items-center">
-      <CircleSmall />
-      <span>{comment.createdBy.name} Mudou a priridade para: </span>
+      <ArrowUpDown size={16} />
+      <UserChip name={comment.createdBy.name} />
+      <span className="text-small">Mudou o status para</span>
       <StatusChip status={status} />
     </div>
   );
@@ -52,8 +63,9 @@ const PriorityChangeComment = ({ comment }: { comment: TicketComment }) => {
   const priority: number = Number(JSON.parse(comment.content));
   return (
     <div className="flex gap-2 items-center">
-      <CircleSmall />
-      <span>{comment.createdBy.name} Mudou a priridade para: </span>
+      <ArrowUpDown size={16} />
+      <UserChip name={comment.createdBy.name} />
+      <span className="text-small">Mudou a prioridade para: </span>
       <PriorityChip priority={priority} />
     </div>
   );
@@ -63,8 +75,9 @@ const CategoryChangeComment = ({ comment }: { comment: TicketComment }) => {
   const category: TicketCategory = JSON.parse(comment.content);
   return (
     <div className="flex gap-2 items-center">
-      <CircleSmall />
-      <span>{comment.createdBy.name} Definiu a categoria</span>
+      <ArrowUpDown size={16} />
+      <UserChip name={comment.createdBy.name} />
+      <span className="text-small">Definiu a categoria</span>
       <CategoryChip category={category} />
     </div>
   );
@@ -74,7 +87,11 @@ const TagRemoveCommentView = ({ comment }: { comment: TicketComment }) => {
   const tag: TicketTag = JSON.parse(comment.content);
   return (
     <div className="flex gap-2 items-center">
-      <span>{comment.createdBy.name} removeu a tag</span>
+      <Badge variant="shadow" color="danger" content={<MinusIcon size={8} />}>
+        <Tag size={16} />
+      </Badge>
+      <UserChip name={comment.createdBy.name} />
+      <span className="text-small">removeu a tag</span>
       <TagChip tag={tag} />
     </div>
   );
@@ -84,7 +101,11 @@ const TagAddCommentView = ({ comment }: { comment: TicketComment }) => {
   const tag: TicketTag = JSON.parse(comment.content);
   return (
     <div className="flex gap-2 items-center">
-      <span>{comment.createdBy.name} adicionou a tag</span>
+      <Badge variant="shadow" color="success" content={<PlusIcon size={8} />}>
+        <Tag size={16} />
+      </Badge>
+      <UserChip name={comment.createdBy.name} />
+      <span className="text-small">adicionou a tag</span>
       <TagChip tag={tag} />
     </div>
   );
@@ -95,9 +116,10 @@ const AssigneeChangeCommentView = ({ comment }: { comment: TicketComment }) => {
   return (
     <div className="flex gap-2 items-center">
       <UserCog size={16} />
-      <span>
-        {comment.createdBy.name} designou {assignedUser.name} [
-        {assignedUser.branch} - {assignedUser.sector}] como atendente
+      <UserChip name={comment.createdBy.name} />
+      <span className="text-small">
+        designou {assignedUser.name} [{assignedUser.branch} -{" "}
+        {assignedUser.sector}] como atendente
       </span>
     </div>
   );
@@ -107,7 +129,8 @@ const AssigneeRemoveCommentView = ({ comment }: { comment: TicketComment }) => {
   return (
     <div className="flex gap-2 items-center">
       <UserCog size={16} />
-      <span>{comment.createdBy.name} removeu o atendente</span>
+      <UserChip name={comment.createdBy.name} />
+      <span className="text-small">removeu o atendente</span>
     </div>
   );
 };
@@ -140,4 +163,10 @@ const StandardCommentView = ({ comment }: { comment: TicketComment }) => (
       </div>
     </CardBody>
   </Card>
+);
+
+const UserChip = ({ name }: { name: string }) => (
+  <Chip size="sm" startContent={<UserRound size={14} />}>
+    {name}
+  </Chip>
 );
