@@ -65,7 +65,7 @@ const PriorityChangeComment = ({ comment }: { comment: TicketComment }) => {
     <div className="flex gap-2 items-center">
       <ArrowUpDown size={16} />
       <UserChip name={comment.createdBy.name} />
-      <span className="text-small">Mudou a prioridade para: </span>
+      <span className="text-small">Mudou a prioridade para</span>
       <PriorityChip priority={priority} />
     </div>
   );
