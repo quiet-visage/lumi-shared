@@ -17,6 +17,7 @@ import {
   PlusIcon,
   Tag,
   UserCog,
+  UserLockIcon,
   UserRound,
 } from "lucide-react";
 import { TagChip } from "./tagChip";
@@ -52,7 +53,7 @@ const StatusChangeComment = ({ comment }: { comment: TicketComment }) => {
   return (
     <div className="flex gap-2 items-center">
       <ArrowUpDown size={16} />
-      <UserChip name={comment.createdBy.name} />
+      <UserChip user={comment.createdBy} />
       <span className="text-small">Mudou o status para</span>
       <StatusChip status={status} />
     </div>
@@ -64,7 +65,7 @@ const PriorityChangeComment = ({ comment }: { comment: TicketComment }) => {
   return (
     <div className="flex gap-2 items-center">
       <ArrowUpDown size={16} />
-      <UserChip name={comment.createdBy.name} />
+      <UserChip user={comment.createdBy} />
       <span className="text-small">Mudou a prioridade para</span>
       <PriorityChip priority={priority} />
     </div>
@@ -76,7 +77,7 @@ const CategoryChangeComment = ({ comment }: { comment: TicketComment }) => {
   return (
     <div className="flex gap-2 items-center">
       <ArrowUpDown size={16} />
-      <UserChip name={comment.createdBy.name} />
+      <UserChip user={comment.createdBy} />
       <span className="text-small">Definiu a categoria</span>
       <CategoryChip category={category} />
     </div>
@@ -90,7 +91,7 @@ const TagRemoveCommentView = ({ comment }: { comment: TicketComment }) => {
       <Badge variant="shadow" color="danger" content={<MinusIcon size={8} />}>
         <Tag size={16} />
       </Badge>
-      <UserChip name={comment.createdBy.name} />
+      <UserChip user={comment.createdBy} />
       <span className="text-small">removeu a tag</span>
       <TagChip tag={tag} />
     </div>
@@ -104,7 +105,7 @@ const TagAddCommentView = ({ comment }: { comment: TicketComment }) => {
       <Badge variant="shadow" color="success" content={<PlusIcon size={8} />}>
         <Tag size={16} />
       </Badge>
-      <UserChip name={comment.createdBy.name} />
+      <UserChip user={comment.createdBy} />
       <span className="text-small">adicionou a tag</span>
       <TagChip tag={tag} />
     </div>
@@ -116,7 +117,7 @@ const AssigneeChangeCommentView = ({ comment }: { comment: TicketComment }) => {
   return (
     <div className="flex gap-2 items-center">
       <UserCog size={16} />
-      <UserChip name={comment.createdBy.name} />
+      <UserChip user={comment.createdBy} />
       <span className="text-small">
         designou {assignedUser.name} [{assignedUser.branch} -{" "}
         {assignedUser.sector}] como atendente
@@ -129,7 +130,7 @@ const AssigneeRemoveCommentView = ({ comment }: { comment: TicketComment }) => {
   return (
     <div className="flex gap-2 items-center">
       <UserCog size={16} />
-      <UserChip name={comment.createdBy.name} />
+      <UserChip user={comment.createdBy} />
       <span className="text-small">removeu o atendente</span>
     </div>
   );
@@ -165,8 +166,16 @@ const StandardCommentView = ({ comment }: { comment: TicketComment }) => (
   </Card>
 );
 
-const UserChip = ({ name }: { name: string }) => (
-  <Chip size="sm" startContent={<UserRound size={14} />}>
-    {name}
-  </Chip>
-);
+const UserChip = ({ user }: { user: TicketUser }) => {
+  const icon = user.disabled ? (
+    <UserLockIcon size={14} className="stroke-[hsl(var(--heroui-danger))]" />
+  ) : (
+    <UserRound size={14} />
+  );
+
+  return (
+    <Chip size="sm" startContent={icon}>
+      {user.name}
+    </Chip>
+  );
+};
