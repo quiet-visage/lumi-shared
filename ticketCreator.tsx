@@ -55,7 +55,9 @@ export const TicketCreation = ({
         sector: "",
         branch: "",
         viewScope: 0,
+        disabled: false,
       },
+      tags: [],
     };
 
     api
