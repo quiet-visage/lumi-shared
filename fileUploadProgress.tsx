@@ -1,6 +1,7 @@
 import { Listbox, ListboxItem, ListboxSection } from "@heroui/listbox";
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/modal";
 import { Progress } from "@heroui/progress";
+import { Spinner } from "@heroui/spinner";
 
 export interface FileUploadProgressPopUpProps {
   filesBeingUploaded: File[];
@@ -20,7 +21,14 @@ export const FileUploadProgressPopUp = ({
   return (
     <Modal isOpen={isOpen} onClose={onCloseRequest}>
       <ModalContent>
-        <ModalHeader>Upload de arquivos</ModalHeader>
+        <ModalHeader className="flex gap-2 items-center">
+          {filesBeingUploaded.length ? (
+            <Spinner variant="gradient" size="sm" />
+          ) : (
+            <></>
+          )}
+          Fazendo Upload de Arquivos...
+        </ModalHeader>
         <ModalBody>
           <Progress isIndeterminate size="sm" />
           <Listbox shouldHighlightOnFocus={false} variant="bordered">

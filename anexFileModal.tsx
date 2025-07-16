@@ -9,6 +9,7 @@ import {
 } from "@heroui/modal";
 import { ScrollShadow } from "@heroui/scroll-shadow";
 import { BigDocumentIcon, XLBigDocumentIcon } from "./icons";
+import { CrossIcon, TrashIcon, XIcon } from "lucide-react";
 
 export interface AnexModalProps {
   isOpen: boolean;
@@ -56,6 +57,20 @@ export const AnexFileModal = ({
                   <Card key={idx.toString()} className="w-fit">
                     <CardBody className="flex items-center justify-center">
                       <BigDocumentIcon />
+                      <Button
+                        radius="full"
+                        className="absolute top-0 right-0"
+                        isIconOnly
+                        size="sm"
+                        variant="light"
+                        onPress={() => {
+                          const cpy = [...filesAnexed];
+                          cpy.splice(idx, 1);
+                          onFilesAnexedChange(cpy);
+                        }}
+                      >
+                        <XIcon size={14} />
+                      </Button>
                     </CardBody>
                     <CardFooter className="flex flex-col items-center justify-center w-max-xs">
                       <p className="text-tiny text-default-400 uppercase">
