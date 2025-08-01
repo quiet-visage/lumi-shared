@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
 
 // ref must be a table wrapper containing:
 //
@@ -10,7 +10,7 @@ import { MutableRefObject, useEffect, useState } from "react";
 //
 // parents must have a height
 export const useVirtualTableResize = (
-  ref: MutableRefObject<HTMLDivElement | null>
+  ref: RefObject<HTMLDivElement | null>
 ) => {
   const [tableHeight, setTableHeight] = useState(520);
 
