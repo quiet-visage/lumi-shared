@@ -1,5 +1,11 @@
 import { Button } from "@heroui/react";
-import React, { useState, useRef, useLayoutEffect, ReactNode } from "react";
+import React, {
+  useState,
+  useRef,
+  useLayoutEffect,
+  ReactNode,
+  useEffect,
+} from "react";
 
 // You can use any height class you want here, just make sure it's `max-h-`
 
@@ -51,6 +57,8 @@ export function FlexWrapViewMore<T>({
     return () => observer.disconnect();
   }, [items]); // Rerun effect if `items` array itself changes, as this is a fundamental content change.
 
+  const maxHeight = rowMaxHeight + padding * 2;
+
   return (
     <div
       className={`flex flex-col items-center justify-center w-full gap-2 ${className}`}
@@ -58,8 +66,7 @@ export function FlexWrapViewMore<T>({
       <div
         ref={containerRef}
         data-expanded={isExpanded}
-        // KEY FIX: Use max-h-* for collapsed state and transition on max-height
-        className={`p-2 w-full flex flex-wrap gap-5 overflow-hidden transition-[max-height] duration-300 ease-in-out max-h-${rowMaxHeight + padding * 2} data-[expanded=true]:max-h-[var(--full-height)]`}
+        className={`p-2 w-full flex flex-wrap gap-5 overflow-hidden transition-[max-height] duration-300 ease-in-out max-h-${maxHeight} data-[expanded=true]:max-h-[var(--full-height)]`}
       >
         {items.map(renderItem)}
       </div>
