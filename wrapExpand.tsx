@@ -66,7 +66,7 @@ export function FlexWrapViewMore<T>({
       <div
         ref={containerRef}
         data-expanded={isExpanded}
-        className={`p-2 w-full flex flex-wrap gap-5 overflow-hidden transition-[max-height] duration-300 ease-in-out max-h-${maxHeight} data-[expanded=true]:max-h-[var(--full-height)]`}
+        className={`p-2 w-full flex flex-wrap max-h-${maxHeight} gap-5 overflow-hidden transition-[max-height] duration-300 ease-in-out data-[expanded=true]:max-h-[var(--full-height)]`}
       >
         {items.map(renderItem)}
       </div>
