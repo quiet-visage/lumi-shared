@@ -14,7 +14,6 @@ import { Button } from "@heroui/button";
 import { api } from "@/config/api";
 import { LabelContext } from "@/app/providers";
 import { Annex } from "./annex";
-import { headers } from "next/headers";
 
 export interface TicketCreationProps {
   isOpen: boolean;

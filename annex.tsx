@@ -2,11 +2,11 @@ import { useState } from "react";
 import { AnexFileModal } from "./anexFileModal";
 import { FileUploadProgressPopUp } from "./fileUploadProgress";
 import { FileTag } from "./fileTag";
-import { PaperClipIcon } from "./icons";
 import { Button } from "@heroui/button";
 import { TicketUser } from "@/app/models";
 import { api } from "@/config/api";
 import { addToast } from "@heroui/toast";
+import { PaperclipIcon } from "lucide-react";
 
 interface AnnexProps {
   token: string;
@@ -20,8 +20,8 @@ interface AnnexProps {
 }
 
 const AnnexButtonCompact = ({ onPress }: { onPress: () => void }) => (
-  <Button variant="flat" isIconOnly onPress={onPress}>
-    <PaperClipIcon />
+  <Button size="sm" variant="flat" isIconOnly onPress={onPress}>
+    <PaperclipIcon size={14} />
   </Button>
 );
 
@@ -132,7 +132,7 @@ export const Annex = ({
           <Button
             className=""
             variant={"bordered"}
-            endContent={<PaperClipIcon />}
+            endContent={<PaperclipIcon size={14} />}
             onPress={() => setIsAnexMenuOpen(true)}
           >
             Anexar arquivo
