@@ -10,18 +10,11 @@ import { ScrollShadow } from "@heroui/scroll-shadow";
 import { addToast } from "@heroui/toast";
 import { useEffect, useRef, useState } from "react";
 import { TicketCommentView } from "./ticketCommentView";
-import { TicketFileLink } from "./ticketFileLink";
 import { Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
-import { PaperClipIcon, PaperPlaneIcon } from "./icons";
-import { AnexFileModal } from "./anexFileModal";
+import { PaperPlaneIcon } from "./icons";
 import { api } from "@/config/api";
-import {
-  CommentsBubble,
-  PriorityChip,
-  StatusChip,
-  TicketCard,
-} from "./ticketCard";
+import { CommentsBubble, PriorityChip, StatusChip } from "./ticketCard";
 import { Annex, AnnexedFileList } from "./annex";
 
 interface TicketDiscussionProps {
