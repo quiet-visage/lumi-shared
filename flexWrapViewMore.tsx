@@ -8,6 +8,11 @@ import React, {
 } from "react";
 
 // You can use any height class you want here, just make sure it's `max-h-`
+//
+interface FlexWrapViewMoreClassNames {
+  base: string[];
+  container: string[];
+}
 
 export function FlexWrapViewMore<T>({
   items,
@@ -15,12 +20,14 @@ export function FlexWrapViewMore<T>({
   className = "",
   rowMaxHeight = 28,
   padding = 2,
+  classNames = { base: [], container: [] },
 }: {
   items: T[];
   renderItem: (item: T, index: number) => ReactNode;
   className?: string;
   rowMaxHeight?: number;
   padding?: number;
+  classNames?: FlexWrapViewMoreClassNames;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -61,12 +68,12 @@ export function FlexWrapViewMore<T>({
 
   return (
     <div
-      className={`flex flex-col items-center justify-center w-full gap-2 ${className}`}
+      className={`flex flex-col items-center justify-center w-full gap-2 ${className} ${classNames.base.join(" ")}`}
     >
       <div
         ref={containerRef}
         data-expanded={isExpanded}
-        className={`p-2 w-full flex flex-wrap max-h-${maxHeight} gap-5 overflow-hidden transition-[max-height] duration-300 ease-in-out data-[expanded=true]:max-h-[var(--full-height)]`}
+        className={`p-2 w-full flex flex-wrap max-h-${maxHeight} gap-5 overflow-hidden transition-[max-height] duration-300 ease-in-out ${classNames.container.join(" ")} data-[expanded=true]:max-h-[var(--full-height)]`}
       >
         {items.map(renderItem)}
       </div>

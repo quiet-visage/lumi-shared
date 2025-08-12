@@ -1,30 +1,39 @@
 import { Button } from "@heroui/button";
 import { ReactNode, useState } from "react";
-import { AnimatedChevron } from "./animatedChevron";
+import { AnimatedChevron, ChevronDirection } from "./animatedChevron";
 
 export const PopoverSelectTrigger = ({
+  open = false,
   className = "",
   hideChevron = false,
   loading = false,
   children,
+  flipChevron = false,
+  chevronDirection = "horizontal",
   ...props
 }: {
+  open: boolean;
   className?: string;
   hideChevron?: boolean;
   loading?: boolean;
   children: ReactNode;
+  flipChevron?: boolean;
+  chevronDirection?: ChevronDirection;
 }) => {
-  const [open, setOpen] = useState<boolean>(false);
   const endContent = hideChevron ? (
     <></>
   ) : (
-    <AnimatedChevron open={open} className="absolute end-3" />
+    <AnimatedChevron
+      flip={flipChevron}
+      direction={chevronDirection}
+      open={open}
+      className="absolute end-2"
+    />
   );
   return (
     <Button
       {...props}
       isLoading={loading}
-      onPress={() => setOpen(!open)}
       endContent={endContent}
       size="sm"
       variant="bordered"

@@ -1,12 +1,7 @@
 import { Listbox, ListboxSection, ListboxItem } from "@heroui/listbox";
-import { Popover, PopoverTrigger, PopoverContent } from "@heroui/popover";
-import {
-  CircleHelp,
-  CircleDot,
-  CircleEllipsis,
-  CircleCheckBig,
-} from "lucide-react";
-import { PopoverSelectTrigger } from "../popOverSelectTrigger";
+import { PopoverContent } from "@heroui/popover";
+import { CircleDot, CircleEllipsis, CircleCheckBig } from "lucide-react";
+import { PopoverSelect } from "@/components/admin/popOverSelect";
 
 export const StatusFilter = ({
   filters,
@@ -16,15 +11,7 @@ export const StatusFilter = ({
   setFilters: (v: Set<string>) => void;
 }) => {
   return (
-    <Popover placement="bottom" triggerType="listbox">
-      <PopoverTrigger>
-        <PopoverSelectTrigger
-          //@ts-expect-error
-          startContent={<CircleHelp size={16} />}
-        >
-          Status
-        </PopoverSelectTrigger>
-      </PopoverTrigger>
+    <PopoverSelect triggerContent={"Status"} placement="bottom">
       <PopoverContent>
         <Listbox
           selectionMode="multiple"
@@ -68,6 +55,6 @@ export const StatusFilter = ({
           </ListboxSection>
         </Listbox>{" "}
       </PopoverContent>{" "}
-    </Popover>
+    </PopoverSelect>
   );
 };

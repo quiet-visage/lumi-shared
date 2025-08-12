@@ -1,7 +1,7 @@
 import { Listbox, ListboxSection, ListboxItem } from "@heroui/listbox";
-import { Popover, PopoverTrigger, PopoverContent } from "@heroui/popover";
+import { PopoverContent } from "@heroui/popover";
 import { CircleAlert, Leaf, Flag } from "lucide-react";
-import { PopoverSelectTrigger } from "../popOverSelectTrigger";
+import { PopoverSelect } from "@/components/admin/popOverSelect";
 
 export const PriorityFilter = ({
   filters,
@@ -11,15 +11,7 @@ export const PriorityFilter = ({
   setFilters: (v: Set<string>) => void;
 }) => {
   return (
-    <Popover placement="bottom" triggerType="listbox">
-      <PopoverTrigger>
-        <PopoverSelectTrigger
-          //@ts-expect-error
-          startContent={<CircleAlert size={16} />}
-        >
-          Prioridade
-        </PopoverSelectTrigger>
-      </PopoverTrigger>
+    <PopoverSelect triggerContent={"Prioridade"} placement="bottom">
       <PopoverContent>
         <Listbox
           selectedKeys={filters}
@@ -39,6 +31,6 @@ export const PriorityFilter = ({
           </ListboxSection>
         </Listbox>
       </PopoverContent>
-    </Popover>
+    </PopoverSelect>
   );
 };

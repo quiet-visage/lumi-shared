@@ -12,10 +12,10 @@ import { useEffect, useRef, useState } from "react";
 import { TicketCommentView } from "./ticketCommentView";
 import { Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
-import { PaperPlaneIcon } from "./icons";
 import { api } from "@/config/api";
 import { CommentsBubble, PriorityChip, StatusChip } from "./ticketCard";
-import { Annex, AnnexedFileList } from "./annex";
+import { Annex, AnnexedFileList } from "../annex";
+import { PaperPlaneIcon } from "../icons";
 
 interface TicketDiscussionProps {
   ticket: Ticket;
@@ -80,7 +80,7 @@ export const TicketDiscussion = ({
     <>
       <Drawer
         placement={"left"}
-        size={"2xl"}
+        size={"4xl"}
         backdrop="blur"
         isOpen={isOpen}
         onOpenChange={onOpenChange}

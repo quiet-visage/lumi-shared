@@ -1,8 +1,7 @@
-import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
-import { CalendarRange } from "lucide-react";
-import { PopoverSelectTrigger } from "./popOverSelectTrigger";
+import { PopoverContent } from "@heroui/popover";
 import { Calendar } from "@heroui/calendar";
 import { today, getLocalTimeZone } from "@internationalized/date";
+import { PopoverSelect } from "../admin/popOverSelect";
 
 export const DateRangePick = ({
   minDate,
@@ -16,15 +15,7 @@ export const DateRangePick = ({
   setMaxDate: (v: any) => void;
 }) => {
   return (
-    <Popover placement="bottom" triggerType="listbox">
-      <PopoverTrigger>
-        <PopoverSelectTrigger
-          //@ts-expect-error
-          startContent={<CalendarRange size={16} />}
-        >
-          Data
-        </PopoverSelectTrigger>
-      </PopoverTrigger>
+    <PopoverSelect triggerContent="Data" placement="bottom">
       <PopoverContent className="flex flex-row w-fit">
         <div className="flex flex-col w-fit items-center p-2 gap-2">
           <p>
@@ -50,6 +41,6 @@ export const DateRangePick = ({
           />
         </div>
       </PopoverContent>
-    </Popover>
+    </PopoverSelect>
   );
 };

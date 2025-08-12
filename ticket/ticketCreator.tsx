@@ -60,7 +60,7 @@ export const TicketCreation = ({
     };
 
     api
-      .post("/add_ticket", JSON.stringify(ticket), {
+      .post("/ticket", JSON.stringify(ticket), {
         headers: { Authorization: token },
       })
       .then((response) => {
