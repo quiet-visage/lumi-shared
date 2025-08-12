@@ -13,7 +13,7 @@ import { useContext, useState } from "react";
 import { Button } from "@heroui/button";
 import { api } from "@/config/api";
 import { LabelContext } from "@/app/providers";
-import { Annex } from "./annex";
+import { Annex } from "../annex";
 
 export interface TicketCreationProps {
   isOpen: boolean;

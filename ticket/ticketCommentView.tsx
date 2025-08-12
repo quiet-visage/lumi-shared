@@ -9,7 +9,7 @@ import { apiFileUrl } from "@/config/api";
 import { Card, CardBody } from "@heroui/card";
 import { User } from "@heroui/user";
 import dayjs from "dayjs";
-import { FileLink } from "./fileLink";
+import { FileLink } from "../fileLink";
 import {
   ArrowUpDown,
   BoxesIcon,

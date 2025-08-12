@@ -6,7 +6,7 @@ import {
   CircleEllipsis,
   CircleCheckBig,
 } from "lucide-react";
-import { PopoverSelectTrigger } from "./popOverSelectTrigger";
+import { PopoverSelectTrigger } from "../popOverSelectTrigger";
 
 export const StatusFilter = ({
   filters,

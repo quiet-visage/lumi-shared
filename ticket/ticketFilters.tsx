@@ -1,6 +1,6 @@
 import { Input } from "@heroui/input";
 import { Search } from "lucide-react";
-import { DateRangePick } from "./dateRangePick";
+import { DateRangePick } from "../dateRangePick";
 import { PriorityFilter } from "./priorityFilter";
 import { StatusFilter } from "./statusFilter";
 import { DateValue } from "@heroui/calendar";

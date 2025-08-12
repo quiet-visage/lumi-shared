@@ -2,8 +2,11 @@ import { Button } from "@heroui/button";
 import { Divider } from "@heroui/divider";
 import { Listbox, ListboxItem } from "@heroui/listbox";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
-import { ArrowDownWideNarrow, ArrowUpNarrowWide } from "lucide-react";
-import { AdjustmentsIcon } from "./icons";
+import {
+  ArrowDownWideNarrow,
+  ArrowUpNarrowWide,
+  Settings2Icon,
+} from "lucide-react";
 import { useContext } from "react";
 import { LabelContext } from "@/app/providers";
 
@@ -24,7 +27,7 @@ export const TicketOrder = ({}: { order: Order; orderBy: OrderBy }) => {
   return (
     <Popover placement="bottom" backdrop="blur">
       <PopoverTrigger>
-        <Button size="sm" color="secondary" endContent={<AdjustmentsIcon />}>
+        <Button size="sm" color="secondary" endContent={<Settings2Icon />}>
           Ordenar
         </Button>
       </PopoverTrigger>

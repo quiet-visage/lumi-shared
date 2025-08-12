@@ -1,7 +1,7 @@
 import { Listbox, ListboxSection, ListboxItem } from "@heroui/listbox";
 import { Popover, PopoverTrigger, PopoverContent } from "@heroui/popover";
 import { CircleAlert, Leaf, Flag } from "lucide-react";
-import { PopoverSelectTrigger } from "./popOverSelectTrigger";
+import { PopoverSelectTrigger } from "../popOverSelectTrigger";
 
 export const PriorityFilter = ({
   filters,
