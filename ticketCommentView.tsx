@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import { FileLink } from "./fileLink";
 import {
   ArrowUpDown,
+  BoxesIcon,
   CircleSmall,
   MinusIcon,
   PlusIcon,
@@ -43,6 +44,8 @@ export const TicketCommentView = ({ comment }: { comment: TicketComment }) => {
       return <StatusChangeComment comment={comment} />;
     case CommentType.PriorityChange:
       return <PriorityChangeComment comment={comment} />;
+    case CommentType.StockUniAssociation:
+      return <StockUnitAssociationComment comment={comment} />;
     default:
       return <p>Comment type {comment.type} not implemented.</p>;
   }
@@ -165,6 +168,29 @@ const StandardCommentView = ({ comment }: { comment: TicketComment }) => (
     </CardBody>
   </Card>
 );
+
+const StockUnitAssociationComment = ({
+  comment,
+}: {
+  comment: TicketComment;
+}) => {
+  const content: StockAssociationCommentContent = JSON.parse(comment.content);
+  return (
+    <div className="flex gap-2 items-center text-small">
+      <BoxesIcon size={16} />
+      <UserChip user={comment.createdBy} />
+      <span>Associou </span>
+      Patrimônio <span className="font-bold">{content.assetTag}</span>:{" "}
+      {content.modelName} {content.manufacturer}
+    </div>
+  );
+};
+
+interface StockAssociationCommentContent {
+  modelName: string;
+  manufacturer: string;
+  assetTag: string;
+}
 
 const UserChip = ({ user }: { user: TicketUser }) => {
   const icon = user.disabled ? (
