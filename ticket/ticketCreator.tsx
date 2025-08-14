@@ -1,4 +1,10 @@
-import { Ticket, TicketPriority, TicketStatus, TicketUser } from "@/app/models";
+import {
+  CreateTicketPayload,
+  Ticket,
+  TicketPriority,
+  TicketStatus,
+  TicketUser,
+} from "@/app/models";
 import { Input, Textarea } from "@heroui/input";
 import {
   Modal,
@@ -14,6 +20,7 @@ import { Button } from "@heroui/button";
 import { api } from "@/config/api";
 import { LabelContext } from "@/app/providers";
 import { Annex } from "../annex";
+import { useTicketApi } from "@/hooks/useTicketApi";
 
 export interface TicketCreationProps {
   isOpen: boolean;
@@ -36,33 +43,17 @@ export const TicketCreation = ({
   const [annexes, setAnnexes] = useState<File[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [priority, setPriority] = useState<TicketPriority>(TicketPriority.MED);
+  const { createTicket } = useTicketApi();
 
   const uploadTicket = async () => {
-    let ticket: Ticket = {
-      _id: "",
+    let payload: CreateTicketPayload = {
       title: subject,
       description: comment,
-      status: TicketStatus.OPEN,
       priority: priority,
-      createdBy: user,
-      createdAt: new Date(),
-      comments: [],
       files: annexes.map((v) => v.name),
-      assignee: {
-        _id: "0".repeat(24),
-        name: "",
-        sector: "",
-        branch: "",
-        viewScope: 0,
-        disabled: false,
-      },
-      tags: [],
     };
 
-    api
-      .post("/ticket", JSON.stringify(ticket), {
-        headers: { Authorization: token },
-      })
+    createTicket(payload)
       .then((response) => {
         addToast({ title: "chamado criado", color: "success" });
       })
