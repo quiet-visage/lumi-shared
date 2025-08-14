@@ -1,10 +1,3 @@
-import {
-  CreateTicketPayload,
-  Ticket,
-  TicketPriority,
-  TicketStatus,
-  TicketUser,
-} from "@/app/models";
 import { Input, Textarea } from "@heroui/input";
 import {
   Modal,
@@ -17,14 +10,18 @@ import { Select, SelectItem } from "@heroui/select";
 import { addToast } from "@heroui/toast";
 import { useContext, useState } from "react";
 import { Button } from "@heroui/button";
-import { api } from "@/config/api";
 import { LabelContext } from "@/app/providers";
 import { Annex } from "../annex";
 import { useTicketApi } from "@/hooks/useTicketApi";
+import { Account } from "@/components/admin/account/accountModels";
+import {
+  CreateTicketPayload,
+  TicketPriority,
+} from "@/components/admin/ticket/ticketModels";
 
 export interface TicketCreationProps {
   isOpen: boolean;
-  user: TicketUser;
+  user: Account;
   token: string;
   onUpload: () => void;
   onCancel: () => void;
