@@ -1,10 +1,3 @@
-import {
-  CommentType,
-  TicketCategory,
-  TicketComment,
-  TicketTag,
-  TicketUser,
-} from "@/app/models";
 import { apiFileUrl } from "@/config/api";
 import { Card, CardBody } from "@heroui/card";
 import { User } from "@heroui/user";
@@ -25,6 +18,13 @@ import { TagChip } from "./tagChip";
 import { CategoryChip, PriorityChip, StatusChip } from "./ticketCard";
 import { Chip } from "@heroui/chip";
 import { Badge } from "@heroui/badge";
+import {
+  CommentType,
+  TicketCategory,
+  TicketComment,
+  TicketTag,
+} from "@/components/admin/ticket/ticketModels";
+import { Account } from "@/components/admin/account/accountModels";
 
 export const TicketCommentView = ({ comment }: { comment: TicketComment }) => {
   switch (comment.type) {
@@ -116,7 +116,7 @@ const TagAddCommentView = ({ comment }: { comment: TicketComment }) => {
 };
 
 const AssigneeChangeCommentView = ({ comment }: { comment: TicketComment }) => {
-  const assignedUser: TicketUser = JSON.parse(comment.content);
+  const assignedUser: Account = JSON.parse(comment.content);
   return (
     <div className="flex gap-2 items-center">
       <UserCog size={16} />
@@ -192,7 +192,7 @@ interface StockAssociationCommentContent {
   assetTag: string;
 }
 
-const UserChip = ({ user }: { user: TicketUser }) => {
+const UserChip = ({ user }: { user: Account }) => {
   const icon = user.disabled ? (
     <UserLockIcon size={14} className="stroke-[hsl(var(--heroui-danger))]" />
   ) : (
