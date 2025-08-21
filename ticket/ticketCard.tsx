@@ -1,10 +1,3 @@
-import {
-  Ticket,
-  TicketCategory,
-  TicketPriority,
-  TicketStatus,
-  TicketUser,
-} from "@/app/models";
 import { LabelContext } from "@/app/providers";
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import { Chip } from "@heroui/chip";
@@ -25,6 +18,13 @@ import {
 } from "lucide-react";
 import { Avatar } from "@heroui/avatar";
 import { TagChip } from "./tagChip";
+import {
+  Ticket,
+  TicketCategory,
+  TicketPriority,
+  TicketStatus,
+} from "@/components/admin/ticket/ticketModels";
+import { Account } from "@/components/admin/account/accountModels";
 
 export interface TicketCardProps {
   ticket: Ticket;
@@ -87,7 +87,7 @@ export const TicketCardUser = ({
   createdAt,
   fileCount,
 }: {
-  user: TicketUser;
+  user: Account;
   createdAt: Date;
   fileCount: number;
 }) => (

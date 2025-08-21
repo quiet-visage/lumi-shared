@@ -41,7 +41,9 @@ export function FlexColViewMore({
         ref={containerRef}
         className={`${classNames.childrenWrapper} p-${padding} w-full flex flex-col gap-2 overflow-hidden transition-[max-height] duration-300 ease-in-out`}
         style={{
-          maxHeight: isExpanded ? "var(--full-height)" : `${collapsedHeight}px`,
+          maxHeight: isExpanded
+            ? "var(--full-height)"
+            : `calc(var(--spacing) * ${collapsedHeight})`,
         }}
       >
         {children}

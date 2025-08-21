@@ -7,89 +7,85 @@ import React, {
   useEffect,
 } from "react";
 
-// You can use any height class you want here, just make sure it's `max-h-`
-//
-interface FlexWrapViewMoreClassNames {
-  base: string[];
-  container: string[];
-}
-
-export function FlexWrapViewMore<T>({
-  items,
-  renderItem,
-  className = "",
-  rowMaxHeight = 28,
+export function FlexWrapViewMore({
+  children,
+  collapsedHeight = 28,
+  expandText = "Ver mais",
+  collapseText = "Ver menos",
+  classNames = { base: "", childrenWrapper: "" },
   padding = 2,
-  classNames = { base: [], container: [] },
+  isOpen,
+  onClose,
 }: {
-  items: T[];
-  renderItem: (item: T, index: number) => ReactNode;
-  className?: string;
-  rowMaxHeight?: number;
+  children: ReactNode;
+  isOpen?: boolean;
+  onClose?: () => void;
   padding?: number;
-  classNames?: FlexWrapViewMoreClassNames;
+  className?: string;
+  collapsedHeight?: number;
+  expandText?: string;
+  collapseText?: string;
+  classNames?: FlexColViewMoreClassNames;
 }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isOverflowing, setIsOverflowing] = useState(false);
+  const isControlled = isOpen != undefined;
+
+  const [internalIsExpanded, setInternalIsExpanded] = useState(false);
+  const [didEverOverflow, setDidEverOverflow] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // This effect now runs only ONCE on mount to set up the observer.
+  const isExpanded = isControlled ? isOpen : internalIsExpanded;
+
+  const handleToggle = () => {
+    if (isControlled && onClose) {
+      onClose();
+    } else {
+      setInternalIsExpanded(!internalIsExpanded);
+    }
+  };
+
   useLayoutEffect(() => {
     const element = containerRef.current;
     if (!element) return;
 
-    // The ResizeObserver will handle all subsequent size changes.
-    const observer = new ResizeObserver(() => {
-      // 1. Always update the CSS variable with the latest scrollHeight.
-      // This is vital for the expanded state to be correct on window resize.
-      element.style.setProperty("--full-height", `${element.scrollHeight}px`);
+    const hasOverflow = element.scrollHeight > collapsedHeight + 1;
+    if (hasOverflow) {
+      setDidEverOverflow(true);
+    }
 
-      // 2. Check for overflow ONLY if the component is not currently expanded.
-      // We read the `data-expanded` attribute directly from the DOM to avoid stale state.
-      const isCurrentlyExpanded = element.dataset.expanded === "true";
-      if (!isCurrentlyExpanded) {
-        const hasOverflow = element.scrollHeight > element.clientHeight + 1;
-        setIsOverflowing(hasOverflow);
-      }
-    });
-
-    observer.observe(element);
-
-    // Manually run the logic once on initial mount
-    // to set the correct initial state.
     element.style.setProperty("--full-height", `${element.scrollHeight}px`);
-    const initialHasOverflow = element.scrollHeight > element.clientHeight + 1;
-    setIsOverflowing(initialHasOverflow);
-
-    return () => observer.disconnect();
-  }, [items]); // Rerun effect if `items` array itself changes, as this is a fundamental content change.
-
-  const maxHeight = rowMaxHeight + padding * 2;
+  }, [children, collapsedHeight]);
 
   return (
     <div
-      className={`flex flex-col items-center justify-center w-full gap-2 ${className} ${classNames.base.join(" ")}`}
+      className={`flex flex-col items-center w-full gap-2 ${classNames.base}`}
     >
       <div
         ref={containerRef}
-        data-expanded={isExpanded}
-        className={`p-2 w-full flex flex-wrap max-h-${maxHeight} gap-5 overflow-hidden transition-[max-height] duration-300 ease-in-out ${classNames.container.join(" ")} data-[expanded=true]:max-h-[var(--full-height)]`}
+        className={`${classNames.childrenWrapper} p-${padding} w-full flex flex-wrap gap-2 overflow-hidden transition-[max-height] duration-300 ease-in-out`}
+        style={{
+          maxHeight: isExpanded
+            ? "var(--full-height)"
+            : `calc(var(--spacing) * ${collapsedHeight + padding * 2})`,
+        }}
       >
-        {items.map(renderItem)}
+        {children}
       </div>
-
-      {/* Show the button only when overflow is detected */}
-      {isOverflowing && (
+      {didEverOverflow && (
         <Button
           size="sm"
           variant="light"
           color="primary"
           className="text-tiny font-semibold text-blue-600 hover:text-blue-800"
-          onPress={() => setIsExpanded(!isExpanded)}
+          onPress={handleToggle}
         >
-          {isExpanded ? "Ver Menos" : "Ver Mais"} Detalhes
+          {isExpanded ? collapseText : expandText}
         </Button>
       )}
     </div>
   );
+}
+
+interface FlexColViewMoreClassNames {
+  base?: string;
+  childrenWrapper?: string;
 }
