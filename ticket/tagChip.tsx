@@ -1,4 +1,4 @@
-import { TicketTag } from "@/app/models";
+import { TicketTag } from "@/components/admin/ticket/ticketModels";
 import { Chip } from "@heroui/chip";
 import { Tag } from "lucide-react";
 

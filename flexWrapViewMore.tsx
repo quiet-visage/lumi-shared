@@ -9,7 +9,7 @@ import React, {
 
 export function FlexWrapViewMore({
   children,
-  collapsedHeight = 29,
+  collapsedHeight = 32,
   expandText = "Ver mais",
   collapseText = "Ver menos",
   classNames = { base: "", childrenWrapper: "" },
@@ -43,17 +43,41 @@ export function FlexWrapViewMore({
     }
   };
 
+  const [windowDimensions, setWindowDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   useLayoutEffect(() => {
     const element = containerRef.current;
     if (!element) return;
 
-    const hasOverflow = element.scrollHeight > collapsedHeight + 1;
-    if (hasOverflow) {
-      setDidEverOverflow(true);
-    }
+    const style = window.getComputedStyle(element);
+    const paddingTop = parseFloat(style.paddingTop);
+    const paddingBottom = parseFloat(style.paddingBottom);
+    const totalPadding = paddingTop + paddingBottom;
+
+    const hasOverflow =
+      element.scrollHeight > collapsedHeight * 4 + totalPadding + 1;
+    setDidEverOverflow(hasOverflow);
 
     element.style.setProperty("--full-height", `${element.scrollHeight}px`);
-  }, [children, collapsedHeight]);
+  }, [children, collapsedHeight, padding, windowDimensions]);
 
   return (
     <div
@@ -61,7 +85,7 @@ export function FlexWrapViewMore({
     >
       <div
         ref={containerRef}
-        className={`${classNames.childrenWrapper} p-${padding} w-full flex flex-wrap gap-2 overflow-hidden transition-[max-height] duration-300 ease-in-out`}
+        className={`${classNames.childrenWrapper} p-${padding} w-full flex flex-wrap justify-center gap-2 overflow-hidden transition-[max-height] duration-300 ease-in-out`}
         style={{
           maxHeight: isExpanded
             ? "var(--full-height)"

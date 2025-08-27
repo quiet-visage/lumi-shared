@@ -1,5 +1,5 @@
-import { TicketUser } from "@/app/models";
 import { AdminTokenContext } from "@/app/providers";
+import { Account } from "@/components/admin/account/accountModels";
 import { FileUploadStatus } from "@/components/admin/fileUploadView";
 import { api } from "@/config/api";
 import { addToast } from "@heroui/react";
@@ -10,13 +10,18 @@ export const useFileUpload = () => {
   const token = useContext(AdminTokenContext);
   const decodedToken: { [key: string]: string } | null = decodeToken(token);
   if (decodedToken === null) throw "invalid token";
-  const user: TicketUser = {
+  const user: Account = {
     _id: decodedToken._id,
     name: decodedToken.name,
     sector: decodedToken.sector,
     branch: decodedToken.branch,
     viewScope: Number(decodedToken.viewScope),
     disabled: decodedToken.disabled === "true" ? true : false,
+    username: "",
+    email: "",
+    createdAt: new Date(), // TODO
+    updatedAt: new Date(),
+    role: "",
   };
 
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
