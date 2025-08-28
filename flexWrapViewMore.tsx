@@ -9,7 +9,7 @@ import React, {
 
 export function FlexWrapViewMore({
   children,
-  collapsedHeight = 29,
+  collapsedHeight = 32,
   expandText = "Ver mais",
   collapseText = "Ver menos",
   classNames = { base: "", childrenWrapper: "" },
