@@ -3,14 +3,14 @@ import { AnexFileModal } from "./anexFileModal";
 import { FileUploadProgressPopUp } from "./fileUploadProgress";
 import { FileTag } from "./fileTag";
 import { Button } from "@heroui/button";
-import { TicketUser } from "@/app/models";
 import { api } from "@/config/api";
 import { addToast } from "@heroui/toast";
 import { PaperclipIcon } from "lucide-react";
+import { Account } from "../admin/account/accountModels";
 
 interface AnnexProps {
   token: string;
-  user: TicketUser;
+  user: Account;
   annexes: File[];
   setAnnexes: (v: File[]) => void;
   isUploading: boolean;

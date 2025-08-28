@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useState } from "react";
+import { RefObject, useEffect, useLayoutEffect, useState } from "react";
 
 // ref must be a table wrapper containing:
 //
@@ -26,6 +26,26 @@ export const useVirtualTableResize = (
       window.removeEventListener("resize", updateHeight);
     };
   }, [ref]);
+
+  return {
+    tableHeight,
+  };
+};
+
+export const useVHTableSize = () => {
+  const [tableHeight, setTableHeight] = useState(520);
+
+  useLayoutEffect(() => {
+    const updateHeight = () => {
+      setTableHeight(window.innerHeight);
+    };
+    updateHeight();
+
+    window.addEventListener("resize", updateHeight);
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, []);
 
   return {
     tableHeight,

@@ -8,12 +8,10 @@ import { DateValue } from "@heroui/calendar";
 interface TicketFiltersSelectProps {
   minDate: DateValue;
   maxDate: DateValue;
-  search: string;
   priority: Set<string>;
   status: Set<string>;
   setMinDate: (v: DateValue) => void;
   setMaxDate: (v: DateValue) => void;
-  setSearch: (v: string) => void;
   setPriority: (v: Set<string>) => void;
   setStatus: (v: Set<string>) => void;
   className?: string;
@@ -22,26 +20,16 @@ interface TicketFiltersSelectProps {
 export const TicketFiltersSelect = ({
   minDate,
   maxDate,
-  search,
   priority,
   status,
   setMinDate,
   setMaxDate,
-  setSearch,
   setPriority,
   setStatus,
   className = "",
 }: TicketFiltersSelectProps) => {
   return (
-    <div className="flex gap-2 items-center w-full">
-      <Input
-        value={search}
-        onValueChange={setSearch}
-        startContent={<Search size={16} />}
-        placeholder="procurar"
-        size="sm"
-        variant="bordered"
-      />
+    <div className="flex flex-col gap-2 items-center w-full">
       <DateRangePick
         minDate={minDate}
         maxDate={maxDate}

@@ -1,4 +1,4 @@
-import { FileLink } from "./fileLink";
+import { FileLink } from "../fileLink";
 
 export const TicketFileLink = ({ filename }: { filename: string }) => {
   return (

@@ -1,4 +1,3 @@
-import { CommentType, Ticket, TicketComment, TicketUser } from "@/app/models";
 import {
   Drawer,
   DrawerBody,
@@ -16,11 +15,17 @@ import { api } from "@/config/api";
 import { CommentsBubble, PriorityChip, StatusChip } from "./ticketCard";
 import { Annex, AnnexedFileList } from "../annex";
 import { PaperPlaneIcon } from "../icons";
+import {
+  Ticket,
+  TicketComment,
+  CommentType,
+} from "@/components/admin/ticket/ticketModels";
+import { Account } from "@/components/admin/account/accountModels";
 
 interface TicketDiscussionProps {
   ticket: Ticket;
   isOpen: boolean;
-  user: TicketUser;
+  user: Account;
   token: string;
   onOpenChange: (open: boolean) => void;
 }
