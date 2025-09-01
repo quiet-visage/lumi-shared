@@ -5,7 +5,8 @@ import { Tag } from "lucide-react";
 export const TagChip = ({ tag }: { tag: TicketTag }) => (
   <Chip
     size="sm"
-    variant="bordered"
+    variant="flat"
+    className="px-3"
     startContent={<Tag size={14} color={tag.color} />}
   >
     {tag.name}

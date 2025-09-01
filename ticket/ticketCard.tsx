@@ -1,23 +1,28 @@
 import { LabelContext } from "@/app/providers";
-import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
+import { Card, CardHeader } from "@heroui/card";
 import { Chip } from "@heroui/chip";
 import { User } from "@heroui/user";
 import dayjs from "dayjs";
 import { useContext } from "react";
 import {
-  Calendar,
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CheckCircle2Icon,
   CircleAlert,
   CircleCheckBig,
   CircleDot,
   CircleEllipsis,
   CircleSmall,
+  ClockIcon,
+  CogIcon,
   Flag,
   Leaf,
-  Link2,
+  MessageSquareIcon,
   MessageSquareText,
+  MinusIcon,
+  PaperclipIcon,
+  type LucideProps,
 } from "lucide-react";
-import { Avatar } from "@heroui/avatar";
-import { TagChip } from "./tagChip";
 import {
   Ticket,
   TicketCategory,
@@ -42,9 +47,9 @@ export const CommentsBubble = ({ commentCount }: { commentCount: number }) => (
 export const StatusChip = ({ status }: { status: TicketStatus }) => {
   const L = useContext(LabelContext);
   const statusIcon = [
-    <CircleDot size={16} />,
-    <CircleEllipsis size={16} />,
-    <CircleCheckBig size={16} />,
+    <CircleDot size={14} />,
+    <CircleEllipsis size={14} />,
+    <CircleCheckBig size={14} />,
     <></>,
   ];
   const statusColor = ["success", "primary", "secondary", "default"] as const;
@@ -54,6 +59,7 @@ export const StatusChip = ({ status }: { status: TicketStatus }) => {
       color={statusColor[status]}
       startContent={statusIcon[status]}
       size="sm"
+      className="p-3"
     >
       {L.ticket.status[status]}
     </Chip>
@@ -64,9 +70,9 @@ export const PriorityChip = ({ priority }: { priority: TicketPriority }) => {
   const L = useContext(LabelContext);
   const priorityColor = ["default", "default", "danger", "default"] as const;
   const priorityIcon = [
-    <Leaf size={16} />,
-    <CircleAlert size={16} />,
-    <Flag size={16} />,
+    <Leaf size={14} />,
+    <CircleAlert size={14} />,
+    <Flag size={14} />,
     <></>,
   ] as const;
 
@@ -74,6 +80,7 @@ export const PriorityChip = ({ priority }: { priority: TicketPriority }) => {
     <Chip
       size="sm"
       variant="shadow"
+      className="px-3"
       color={priorityColor[priority]}
       startContent={priorityIcon[priority]}
     >
@@ -100,90 +107,164 @@ export const TicketCardUser = ({
   </div>
 );
 
-export const TicketCard = ({
-  ticket,
-  onClick,
-  truncate = false,
-}: TicketCardProps) => {
-  return (
-    <Card
-      className="w-full min-h-fit"
-      isPressable
-      onPress={onClick}
-      shadow="sm"
-    >
-      <CardHeader>
-        <div className="flex w-full gap-5 justify-between items-center">
-          <Avatar isBordered />
-          <div className="flex flex-col gap-1 item-start justify-center">
-            <h4 className="text-small font-semibold text-default-600">
-              {ticket.createdBy.name}
-            </h4>
-            <h5 className="text-small tracking-tight text-default-400">
-              {ticket.createdBy.branch} - {ticket.createdBy.sector}
-            </h5>
-          </div>
-          <div className="w-full flex justify-center">
-            <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-default-600">
-                {ticket ? ticket.title : ""}
-              </h3>
-              {ticket.tags?.map((v) => <TagChip tag={v} key={v._id} />)}
-            </div>
-          </div>
-          <div className="flex gap-5 items-center">
-            {ticket.category ? (
-              <CategoryChip category={ticket.category} />
-            ) : (
-              <></>
-            )}
-            <StatusChip status={ticket ? ticket.status : TicketStatus.OPEN} />
-            <PriorityChip
-              priority={ticket ? ticket.priority : TicketPriority.HIGH}
-            />
-          </div>
-        </div>
-      </CardHeader>
-      <CardBody className="flex w-2/3 self-center">
-        <p className="text-small text-default-600">
-          {ticket ? ticket.description : ""}
-        </p>
-      </CardBody>
-      <CardFooter className="flex w-full justify-end gap-5">
-        {ticket ? (
-          <>
-            <div className="flex gap-1 text-default-400 items-center">
-              <MessageSquareText size={14} />
-              <p className="text-xs">{ticket.comments.length}</p>
-            </div>
-            <div className="flex gap-1 text-default-400 items-center">
-              <Link2 size={14} />
-              <p className="text-tiny text-default-400">{`${ticket.files.length} anexo${ticket.files.length == 1 ? "" : "s"}`}</p>
-            </div>
-            <div className="flex gap-1 text-default-400 items-center">
-              <Calendar size={14} />
-              <p className="text-tiny text-default-400">
-                {dayjs(ticket.createdAt).format("YYYY-MM-DD HH:mm")}
-              </p>
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
-      </CardFooter>
-    </Card>
-  );
-};
-
 export const CategoryChip = ({ category }: { category: TicketCategory }) => {
   if (category == null || category.name.length < 1) return <></>;
   return (
     <Chip
       size="sm"
-      variant="shadow"
+      variant="flat"
       startContent={<CircleSmall color={category.color} />}
+      className="px-3"
     >
       {category.name}
     </Chip>
+  );
+};
+
+export const TICKET_PRIORITY_MAP: {
+  [key in TicketPriority]: {
+    label: string;
+    icon: React.ComponentType<LucideProps>;
+    className: string;
+  };
+} = {
+  [TicketPriority.LOW]: {
+    label: "Low",
+    icon: ArrowDownIcon,
+    className: "text-gray-500",
+  },
+  [TicketPriority.MED]: {
+    label: "Medium",
+    icon: MinusIcon,
+    className: "text-yellow-500",
+  },
+  [TicketPriority.HIGH]: {
+    label: "High",
+    icon: ArrowUpIcon,
+    className: "text-red-500",
+  },
+  [TicketPriority.COUNT]: { label: "", icon: MinusIcon, className: "" },
+};
+
+// --- STATUS MAPPING ---
+export const TICKET_STATUS_MAP: {
+  [key in TicketStatus]: {
+    label: string;
+    icon: React.ComponentType<LucideProps>;
+    className: string;
+  };
+} = {
+  [TicketStatus.OPEN]: {
+    label: "Open",
+    icon: ClockIcon,
+    className: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
+  },
+  [TicketStatus.DEVELOPING]: {
+    label: "Developing",
+    icon: CogIcon,
+    className:
+      "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300",
+  },
+  [TicketStatus.CLOSED]: {
+    label: "Closed",
+    icon: CheckCircle2Icon,
+    className:
+      "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+  },
+  // Add COUNT case to satisfy TypeScript
+  [TicketStatus.COUNT]: { label: "", icon: ClockIcon, className: "" },
+};
+
+export const TicketCard = ({ ticket, onClick }: TicketCardProps) => {
+  const priorityInfo = TICKET_PRIORITY_MAP[ticket.priority];
+  const statusInfo = TICKET_STATUS_MAP[ticket.status];
+
+  // Helper to get initials from a name for the avatar fallback
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .slice(0, 2)
+      .join("");
+  };
+
+  return (
+    <Card
+      isPressable
+      onPress={onClick}
+      className="group flex flex-col justify-between p-4 shadow-sm transition-all hover:shadow-lg"
+    >
+      {/* Card Header */}
+      <CardHeader className="p-0 mb-3 flex items-start justify-between">
+        <div className="flex flex-col">
+          <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 transition-colors transition-500 group-hover:text-[hsl(var(--heroui-primary))] dark:group-hover:text-blue-400">
+            {ticket.title}
+          </h3>
+        </div>
+        <span className="text-sm font-medium text-gray-400 dark:text-gray-500">
+          #{ticket._id.substring(0, 6)}
+        </span>
+      </CardHeader>
+
+      {/* Tags */}
+      {ticket.tags && ticket.tags.length > 0 && (
+        <div className="mb-4 flex flex-wrap gap-2">
+          {ticket.tags.map((tag) => (
+            <span
+              key={tag._id}
+              className="rounded px-2 py-0.5 text-xs font-medium"
+              style={{
+                backgroundColor: `${tag.color}20`,
+                color: tag.color,
+              }}
+            >
+              {tag.name}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Card Footer */}
+      <div className="mt-auto flex items-center justify-between pt-2">
+        {/* Left Side: Priority & Status */}
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1" title={priorityInfo.label}>
+            <priorityInfo.icon className={`size-5 ${priorityInfo.className}`} />
+          </div>
+          <StatusChip status={ticket.status} />
+          {ticket.category && <CategoryChip category={ticket.category} />}
+        </div>
+
+        {/* Right Side: Meta & Assignee */}
+        <div className="flex items-center gap-4">
+          <div className="hidden items-center gap-1.5 text-gray-500 dark:text-gray-400 sm:flex">
+            <MessageSquareIcon className="size-4" />
+            <span className="text-xs font-medium">
+              {ticket.comments.length}
+            </span>
+          </div>
+          <div className="hidden items-center gap-1.5 text-gray-500 dark:text-gray-400 sm:flex">
+            <PaperclipIcon className="size-4" />
+            <span className="text-xs font-medium">{ticket.files.length}</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-gray-500 dark:text-gray-400">
+              {dayjs(ticket.createdAt).fromNow()}
+            </span>
+            {ticket.assignee && (
+              <div
+                className="relative size-8"
+                title={`Assigned to ${ticket.assignee.name}`}
+              >
+                <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-200 text-xs font-bold text-gray-600 dark:bg-gray-600 dark:text-gray-300">
+                  {getInitials(ticket.assignee.name)}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </Card>
   );
 };

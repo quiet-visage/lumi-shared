@@ -85,7 +85,7 @@ export function FlexWrapViewMore({
     >
       <div
         ref={containerRef}
-        className={`${classNames.childrenWrapper} p-${padding} w-full flex flex-wrap justify-center gap-2 overflow-hidden transition-[max-height] duration-300 ease-in-out`}
+        className={`${classNames.childrenWrapper} p-${padding} w-full flex flex-wrap justify-center gap-2 overflow-hidden transition-[max-height] duration-800 ease-in-out`}
         style={{
           maxHeight: isExpanded
             ? "var(--full-height)"

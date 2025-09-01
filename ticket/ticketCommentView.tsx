@@ -6,7 +6,6 @@ import { FileLink } from "../fileLink";
 import {
   ArrowUpDown,
   BoxesIcon,
-  CircleSmall,
   MinusIcon,
   PlusIcon,
   Tag,
@@ -143,9 +142,16 @@ const StandardCommentView = ({ comment }: { comment: TicketComment }) => (
   <Card className="min-h-fit" shadow="sm">
     <CardBody className="flex flex-row gap-6 items-start">
       <div className="flex flex-col items-center gap-1 justify-center">
-        <User name={comment.createdBy.name} />
+        <User
+          avatarProps={{
+            size: "sm",
+            icon: comment.createdBy.name[0].toUpperCase(),
+          }}
+          name={comment.createdBy.name}
+          description={`${comment.createdBy.branch} - ${comment.createdBy.sector}`}
+        />
         <p className="text-tiny text-center text-default-400">
-          {dayjs(comment.createdAt).format("DD-MM-YYYY HH:mm")}
+          {dayjs(comment.createdAt).fromNow()}
         </p>
         {comment.files.length ? (
           <p className="text-tiny text-default-400">{`${comment.files.length} anexo${comment.files.length == 1 ? "" : "s"}`}</p>
