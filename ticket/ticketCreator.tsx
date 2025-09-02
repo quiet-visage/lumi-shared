@@ -13,15 +13,14 @@ import { Button } from "@heroui/button";
 import { LabelContext } from "@/app/providers";
 import { Annex } from "../annex";
 import { useTicketApi } from "@/hooks/useTicketApi";
-import { Account } from "@/components/admin/account/accountModels";
 import {
   CreateTicketPayload,
   TicketPriority,
 } from "@/components/admin/ticket/ticketModels";
+import { getUserFromToken } from "@/components/admin/getUserFromToken";
 
 export interface TicketCreationProps {
   isOpen: boolean;
-  user: Account;
   token: string;
   onUpload: () => void;
   onCancel: () => void;
@@ -29,7 +28,6 @@ export interface TicketCreationProps {
 
 export const TicketCreation = ({
   isOpen,
-  user,
   token,
   onCancel,
   onUpload,
@@ -41,6 +39,7 @@ export const TicketCreation = ({
   const [isUploading, setIsUploading] = useState(false);
   const [priority, setPriority] = useState<TicketPriority>(TicketPriority.MED);
   const { createTicket } = useTicketApi();
+  const user = getUserFromToken(token);
 
   const uploadTicket = async () => {
     let payload: CreateTicketPayload = {

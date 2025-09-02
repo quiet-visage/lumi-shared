@@ -70,9 +70,9 @@ export const PriorityChip = ({ priority }: { priority: TicketPriority }) => {
   const L = useContext(LabelContext);
   const priorityColor = ["default", "default", "danger", "default"] as const;
   const priorityIcon = [
-    <Leaf size={14} />,
-    <CircleAlert size={14} />,
-    <Flag size={14} />,
+    <ArrowDownIcon size={14} />,
+    <MinusIcon size={14} className="stroke-[hsl(var(--heroui-warning))]" />,
+    <ArrowUpIcon size={14} />,
     <></>,
   ] as const;
 
