@@ -1,4 +1,4 @@
-import { AdminTokenContext } from "@/app/providers";
+import { useAdminToken } from "@/app/adminTokenProvider";
 import { Account } from "@/components/admin/account/accountModels";
 import { FileUploadStatus } from "@/components/admin/fileUploadView";
 import { api } from "@/config/api";
@@ -7,7 +7,7 @@ import { useContext, useState } from "react";
 import { decodeToken } from "react-jwt";
 
 export const useFileUpload = () => {
-  const token = useContext(AdminTokenContext);
+  const token = useAdminToken();
   const decodedToken: { [key: string]: string } | null = decodeToken(token);
   if (decodedToken === null) throw "invalid token";
   const user: Account = {

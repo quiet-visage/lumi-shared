@@ -1,4 +1,3 @@
-import { AdminTokenContext } from "@/app/providers";
 import { Notification } from "./notificationModels";
 import {
   createContext,
@@ -8,13 +7,14 @@ import {
   useState,
 } from "react";
 import { addToast } from "@heroui/react";
+import { useAdminToken } from "@/app/adminTokenProvider";
 
 interface NotificationContextType {
   notifications: Notification[];
   unreadCount: number;
 
   // markAllAsRead: () => void;
-  //clearAll: () => void;
+  // clearAll: () => void;
 }
 
 const NotificationContext = createContext<NotificationContextType | undefined>(
@@ -22,7 +22,7 @@ const NotificationContext = createContext<NotificationContextType | undefined>(
 );
 
 export const NotificationProvider = ({ children }: { children: ReactNode }) => {
-  const token = useContext(AdminTokenContext);
+  const token = useAdminToken();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [connected, setIsConnected] = useState(false);
 
