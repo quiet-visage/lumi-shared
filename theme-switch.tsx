@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 import { useIsSSR } from "@react-aria/ssr";
 import clsx from "clsx";
 
-import { SunFilledIcon, MoonFilledIcon } from "./icons";
+import { MoonIcon, SunIcon } from "lucide-react";
 
 export interface ThemeSwitchProps {
   className?: string;
@@ -65,15 +65,20 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
               "pt-px",
               "px-0",
               "mx-0",
+              "focus:border-transparent",
             ],
             classNames?.wrapper
           ),
         })}
       >
         {!isSelected || isSSR ? (
-          <SunFilledIcon size={22} />
+          <SunIcon className="focus:border-transparent" size={14} />
         ) : (
-          <MoonFilledIcon size={22} color="#71717a" />
+          <MoonIcon
+            className="focus:border-transparent"
+            size={14}
+            color="#71717a"
+          />
         )}
       </div>
     </Component>

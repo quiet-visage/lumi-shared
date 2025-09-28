@@ -8,15 +8,12 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
   CheckCircle2Icon,
-  CircleAlert,
   CircleCheckBig,
   CircleDot,
   CircleEllipsis,
   CircleSmall,
   ClockIcon,
   CogIcon,
-  Flag,
-  Leaf,
   MessageSquareIcon,
   MessageSquareText,
   MinusIcon,
@@ -177,7 +174,6 @@ export const TICKET_STATUS_MAP: {
 
 export const TicketCard = ({ ticket, onClick }: TicketCardProps) => {
   const priorityInfo = TICKET_PRIORITY_MAP[ticket.priority];
-  const statusInfo = TICKET_STATUS_MAP[ticket.status];
 
   // Helper to get initials from a name for the avatar fallback
   const getInitials = (name: string) => {
@@ -192,7 +188,7 @@ export const TicketCard = ({ ticket, onClick }: TicketCardProps) => {
     <Card
       isPressable
       onPress={onClick}
-      className="group flex flex-col justify-between p-4 shadow-sm transition-all hover:shadow-lg"
+      className="group flex flex-col justify-between p-4 shadow-sm transition-all hover:shadow-lg min-h-fit"
     >
       {/* Card Header */}
       <CardHeader className="p-0 mb-3 flex items-start justify-between">

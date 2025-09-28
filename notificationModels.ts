@@ -13,13 +13,17 @@ export enum NotificationSeverity {
   CRITICAL = "CRITICAL",
 }
 
+export enum NotificationActionType {
+  VIEW_TICKET = "VIEW_TICKET"
+}
+
 export interface NotificationAction {
-  label: string;
-  url: string;
+  type: string;
+  metadata: { [key: string]: any };
 }
 
 export interface Notification {
-  id: string;
+  _id: string;
   recipientAccountId: string;
   title: string;
   message: string;
